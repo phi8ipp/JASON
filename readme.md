@@ -37,6 +37,7 @@ obj = JASON.parse(str);
 
 The easiest way to install `JASON` is with NPM:
 
+TODO: make it available via npm
 ```sh
 npm install JASON
 ```
