@@ -4,13 +4,16 @@
 This version contains a dirty fix by using
 ```javascript
 ...
-try {
- ...
- push corresponding line
- ...
-} catch {
- // do nothing
-}
+keys.forEach((k) => {
+      if (o !== undefined){
+        try {
+          var temp = strfy(o[k], path+ '[\"'+ k+ '\"]', builtInObjects, builtInPaths, seen, paths, cyclic, ademas);
+          t.push('\"'+ k+ '\":'+ temp);
+        } catch {
+          console.log('o[k] not doable');
+        }
+      }
+    });
 ...
 ```
 
