@@ -2,7 +2,7 @@
 // MIT License
 
 var JASON = (function (exports) {
-  'use strict';
+  // 'use strict';
   
   var builtInObjects= [];
   var builtInPaths= [
@@ -34,7 +34,7 @@ var JASON = (function (exports) {
     'Set',            'Set.prototype',
     'WeakMap',        'WeakMap.prototype'
   ].filter(function (v,i,o) {
-    'use strict';
+    //'use strict';
     try {
       builtInObjects.push( eval(v) );
       //console.log("SI -> "+ v);
@@ -56,7 +56,7 @@ var JASON = (function (exports) {
     //console.log(paths);
     
     seen.forEach(function (v,i,o) {
-      'use strict';
+      //'use strict';
       //process.stdout.write('Comprobando -> '+ paths[i]+ '\n');
       var where= builtInObjects.indexOf(v);
       if (where < 0) {
@@ -76,7 +76,7 @@ var JASON = (function (exports) {
   seen= paths= null;
 
   function stringify (o) {
-    'use strict';
+    //'use strict';
     var cyclic, ademas;
     var r= stringify.this._strfy(o, 'o', stringify.this._builtInObjects, stringify.this._builtInPaths, [], [], cyclic= [], ademas= []);
     
@@ -103,10 +103,10 @@ var JASON = (function (exports) {
 
 
   function strfy (o, path, builtInObjects, builtInPaths, seen, paths, cyclic, ademas) {
-    'use strict';
+    //'use strict';
 
     function isPrimitive (type, o) {
-      'use strict';
+      //'use strict';
       return ((type === 'number') || (type === 'string') || (type === 'undefined') || (o === null) || (type === 'boolean'));
     }
 
@@ -264,9 +264,25 @@ var JASON = (function (exports) {
     });
 
     var t= [];
-    keys.forEach(function (k) {
-      t.push('\"'+ k+ '\":'+ strfy(o[k], path+ '[\"'+ k+ '\"]', builtInObjects, builtInPaths, seen, paths, cyclic, ademas));
+    keys.forEach((k) => {
+      if (o !== undefined){
+        try {
+          var temp = strfy(o[k], path+ '[\"'+ k+ '\"]', builtInObjects, builtInPaths, seen, paths, cyclic, ademas);
+          t.push('\"'+ k+ '\":'+ temp);
+        } catch {
+          console.log('o[k] not doable');
+        }
+      }
     });
+
+
+
+    /*
+    keys.forEach(function (k) {
+      var temp = strfy(o[k], path+ '[\"'+ k+ '\"]', builtInObjects, builtInPaths, seen, paths, cyclic, ademas);
+      t.push('\"'+ k+ '\":'+ temp);
+    });
+    */
     return '{'+ t.join(',')+ '}';
   }
 
