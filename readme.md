@@ -1,6 +1,18 @@
 ## JASON
 
 ### Forked version trying to make it compatible with newer versions of node.js!
+This version contains a dirty fix by using
+```javascript
+...
+try {
+ ...
+ push corresponding line
+ ...
+} catch {
+ // do nothing
+}
+...
+```
 
 JASON is just like JSON, but with an A. D'oh. ^U
 
